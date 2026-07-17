@@ -1,4 +1,13 @@
 {
+  "name": "school-website",
+  "version": "1.0.0",
+  "description": "GHSS Paravanadukkam School Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Nived",
+  "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "express": "^5.2.1",
