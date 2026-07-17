@@ -1312,6 +1312,10 @@ footer p i {
 }
 
 .loader-content{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
     text-align:center;
 }
 
@@ -1319,18 +1323,22 @@ footer p i {
     width:120px;
     height:120px;
     object-fit:contain;
-    animation:logoFloat 2s infinite ease-in-out;
+
+    display:block;
+    margin:0 auto 20px;
+
+    animation:logoFloat 2s ease-in-out infinite;
 }
 
 .loader-content h2{
-    margin-top:20px;
-    font-size:30px;
+    margin:0;
+    font-size:28px;
     color:#0c4b5a;
 }
 
 .loader-content p{
     color:#666;
-    margin-top:6px;
+    margin:10px 0 25px;
 }
 
 .loader-dots{
