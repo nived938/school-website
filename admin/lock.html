@@ -71,25 +71,6 @@
   </style>
 </head>
 <body>
-  <div id="loader">
-
-    	<div class="loader-content">
-
-			<img src="images/logo.png" alt="GHSS Paravanadukkam Logo" class="loader-logo">
-
-			<h2>GHSS Paravanadukkam</h2>
-
-        	<p>Learn. Grow. Lead.</p>
-
-        	<div class="loader-dots">
-				<span></span>
-				<span></span>
-				<span></span>
-        	</div>
-
-    	</div>
-
-	</div>
   <div class="login-box">
     <h2>School Portal Login</h2>
     <form id="loginForm">
@@ -116,7 +97,7 @@
 
       if (username === 'admin' && password === 'ghsschemnad') {
         message.textContent = '';
-        window.open('index.html', '_blank');
+        window.location.replace("/home");
       } else {
         message.textContent = 'Incorrect username or password.';
       }
