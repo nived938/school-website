@@ -1,0 +1,128 @@
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+.reveal.show {
+  opacity: 1;
+  transform: none;
+}
+.program-grid article,
+.facility-grid article,
+.value-grid article,
+.teachers-grid article,
+.detail-cards article,
+.category-gallery article,
+.student-grid article,
+.competition-list article,
+.trophy-strip article {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.program-grid article::after,
+.facility-grid article::after,
+.value-grid article::after,
+.teachers-grid article::after,
+.detail-cards article::after,
+.category-gallery article::after,
+.student-grid article::after,
+.competition-list article::after,
+.trophy-strip article::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(235, 179, 75, 0.2),
+    rgba(20, 101, 106, 0.14)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.program-grid article:hover,
+.facility-grid article:hover,
+.value-grid article:hover,
+.teachers-grid article:hover,
+.detail-cards article:hover,
+.category-gallery article:hover,
+.student-grid article:hover,
+.competition-list article:hover,
+.trophy-strip article:hover {
+  transform: translateY(-9px) rotate(-0.35deg);
+  box-shadow: 0 18px 32px rgba(23, 50, 60, 0.18);
+}
+.program-grid article:hover::after,
+.facility-grid article:hover::after,
+.value-grid article:hover::after,
+.teachers-grid article:hover::after,
+.detail-cards article:hover::after,
+.category-gallery article:hover::after,
+.student-grid article:hover::after,
+.competition-list article:hover::after,
+.trophy-strip article:hover::after {
+  opacity: 1;
+}
+.program-grid article i,
+.facility-grid article i,
+.value-grid article i,
+.detail-cards article i,
+.trophy-strip article i {
+  transition:
+    transform 0.35s ease,
+    color 0.35s ease;
+}
+.program-grid article:hover i,
+.facility-grid article:hover i,
+.value-grid article:hover i,
+.detail-cards article:hover i,
+.trophy-strip article:hover i {
+  transform: scale(1.18) rotate(10deg);
+  color: var(--gold);
+}
+.category-gallery img,
+.student-grid img {
+  transition:
+    transform 0.45s ease,
+    filter 0.45s ease;
+}
+.category-gallery article:hover img,
+.student-grid article:hover img {
+  transform: scale(1.1);
+  filter: saturate(1.2);
+}
+.gallery-item {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.gallery-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 30px rgba(23, 50, 60, 0.28);
+}
+.button,
+.arrow-link {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.button:hover {
+  box-shadow: 0 10px 20px rgba(230, 110, 82, 0.35);
+}
+.arrow-link:hover {
+  transform: translateX(5px);
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+

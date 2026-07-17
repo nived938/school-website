@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | GHSS Paravanadukkam</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'DM Sans',sans-serif;
+            background:
+            linear-gradient(rgba(11,43,58,.75),rgba(11,43,58,.75)),
+            url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80")
+            center/cover no-repeat;
+
+            min-height:100vh;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .login-card{
+
+            width:100%;
+            max-width:420px;
+
+            background:#fff;
+
+            border-radius:20px;
+
+            padding:40px;
+
+            box-shadow:0 20px 60px rgba(0,0,0,.25);
+
+        }
+
+        .logo{
+
+            width:80px;
+            height:80px;
+
+            border-radius:50%;
+
+            background:#0b7a5c;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            margin:auto;
+
+            color:#fff;
+            font-size:35px;
+
+        }
+
+        h1{
+
+            text-align:center;
+
+            margin-top:20px;
+            margin-bottom:5px;
+
+            color:#1f2937;
+
+        }
+
+        p{
+
+            text-align:center;
+            color:#64748b;
+            margin-bottom:30px;
+
+        }
+
+        .input-group{
+
+            margin-bottom:20px;
+
+        }
+
+        label{
+
+            display:block;
+            margin-bottom:8px;
+            font-weight:600;
+
+        }
+
+        input{
+
+            width:100%;
+            padding:14px;
+
+            border:1px solid #d1d5db;
+
+            border-radius:12px;
+
+            font-size:15px;
+
+            outline:none;
+
+        }
+
+        input:focus{
+
+            border-color:#0b7a5c;
+
+        }
+
+        button{
+
+            width:100%;
+
+            padding:15px;
+
+            border:none;
+
+            border-radius:12px;
+
+            background:#0b7a5c;
+
+            color:#fff;
+
+            font-size:16px;
+
+            cursor:pointer;
+
+            transition:.3s;
+
+        }
+
+        button:hover{
+
+            background:#09684e;
+
+        }
+
+        .error{
+
+            color:#dc2626;
+
+            text-align:center;
+
+            margin-top:15px;
+
+            display:none;
+
+        }
+
+    </style>
+
+</head>
+<body>
+    <div id="loader">
+
+    	<div class="loader-content">
+
+			<img src="images/logo.png" alt="GHSS Paravanadukkam Logo" class="loader-logo">
+
+			<h2>GHSS Paravanadukkam</h2>
+
+        	<p>Learn. Grow. Lead.</p>
+
+        	<div class="loader-dots">
+				<span></span>
+				<span></span>
+				<span></span>
+        	</div>
+
+    	</div>
+
+	</div>
+
+<div class="login-card">
+
+    <div class="logo">
+        🎓
+    </div>
+
+    <h1>Administrator Login</h1>
+
+    <p>GHSS Paravanadukkam</p>
+
+    <form id="loginForm">
+
+        <div class="input-group">
+
+            <label>Username</label>
+
+            <input
+            type="text"
+            id="username"
+            required>
+
+        </div>
+
+        <div class="input-group">
+
+            <label>Password</label>
+
+            <input
+            type="password"
+            id="password"
+            required>
+
+        </div>
+
+        <button type="submit">
+
+            Login
+
+        </button>
+
+        <div class="error" id="error">
+
+            Invalid username or password.
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+
+const form=document.getElementById("loginForm");
+
+const error=document.getElementById("error");
+
+form.addEventListener("submit",async(e)=>{
+
+    e.preventDefault();
+
+    error.style.display="none";
+
+    const username=document.getElementById("username").value;
+
+    const password=document.getElementById("password").value;
+
+    const response=await fetch("/api/login",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            username,
+            password
+
+        })
+
+    });
+
+    const data=await response.json();
+
+    if(data.success){
+
+        window.location.href="/index.html";
+
+    }else{
+
+        error.style.display="block";
+
+    }
+
+});
+
+</script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>404 | Page Not Found</title>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/responsive.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:Poppins,sans-serif;
+    background:#f5f7fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    overflow:hidden;
+}
+
+.error-box{
+    text-align:center;
+    max-width:650px;
+    padding:40px;
+}
+
+.error-box img{
+    width:120px;
+    margin-bottom:20px;
+}
+
+.error-code{
+    font-size:110px;
+    font-weight:700;
+    color:#0b6b3a;
+    line-height:1;
+}
+
+.error-title{
+    font-size:34px;
+    margin:20px 0 10px;
+}
+
+.error-text{
+    color:#666;
+    font-size:18px;
+    line-height:1.7;
+    margin-bottom:35px;
+}
+
+.button-group{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    text-decoration:none;
+    padding:14px 28px;
+    border-radius:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.home-btn{
+    background:#0b6b3a;
+    color:#fff;
+}
+
+.home-btn:hover{
+    background:#09542d;
+}
+
+.back-btn{
+    background:#e5e7eb;
+    color:#111;
+}
+
+.back-btn:hover{
+    background:#d1d5db;
+}
+
+@media(max-width:600px){
+
+.error-code{
+    font-size:72px;
+}
+
+.error-title{
+    font-size:28px;
+}
+
+.error-text{
+    font-size:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="error-box">
+
+<img src="/images/logo.png" alt="School Logo">
+
+<div class="error-code">404</div>
+
+<h1 class="error-title">Oops! Page Not Found</h1>
+
+<p class="error-text">
+The page you are looking for doesn't exist or may have been moved.
+</p>
+
+<div class="button-group">
+
+<a href="/" class="btn home-btn">
+Go to Home
+</a>
+
+<a href="javascript:history.back()" class="btn back-btn">
+Go Back
+</a>
+
+</div>
+
+</div>
+
+</body>
+</html>
