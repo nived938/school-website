@@ -1613,3 +1613,46 @@ transform:scale(1);
 body.modal-open{
     overflow:hidden;
 }
+
+.developer-credit{
+    margin-top:40px;
+    padding:20px;
+    max-width:420px;
+    margin-left:auto;
+    margin-right:auto;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:16px;
+    backdrop-filter:blur(10px);
+    text-align:center;
+    animation:fadeUp 1s ease;
+}
+
+.developer-credit strong{
+    color:#ffd54f;
+    font-size:14px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.developer-credit h3{
+    margin:10px 0 6px;
+    font-size:28px;
+    color:#fff;
+}
+
+.developer-credit p{
+    margin:0;
+    color:#e5e7eb;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
