@@ -5,9 +5,15 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "ghsschemnad";
-const SESSION_SECRET = process.env.SESSION_SECRET || "school_secret_key";
+// Configure these in Render's Environment settings. Never hardcode production secrets.
+const ADMIN_USERNAME = process.env.USER;
+const ADMIN_PASSWORD = process.env.PASSWORD;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+
+if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !SESSION_SECRET) {
+    console.error("Missing required environment variables: USER, PASSWORD, and SESSION_SECRET must all be set.");
+    process.exit(1);
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,9 +36,9 @@ app.use(express.static(path.join(__dirname, "public"), {
     index: false
 }));
 
-// Public homepage. Previously this route served dev_text.html, which is only a placeholder.
+// Keep the root URL on the development placeholder, as requested.
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.sendFile(path.join(__dirname, "public", "dev_text.html"));
 });
 
 // Keep the existing /home URL working.
