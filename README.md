@@ -4,12 +4,10 @@ A responsive school information website for Government Higher Secondary School (
 
 ## Features
 
-- School homepage and navigation
-- About, academics, facilities, achievements, teachers and gallery pages
-- Contact page
-- Static assets served from `public/`
-- Admin login routes and session-based access control
-- Custom not-found page
+- The root URL `/` intentionally serves `public/dev_text.html` (the development placeholder).
+- School information pages are available through their individual URLs.
+- Admin login routes and session-based access control.
+- Static assets and a custom not-found page.
 
 ## Tech stack
 
@@ -21,23 +19,24 @@ A responsive school information website for Government Higher Secondary School (
 
 ## Run locally
 
-1. Install a current supported Node.js LTS release.
-2. Clone the repository and open its folder.
+1. Install a supported Node.js LTS release.
+2. Clone this repository and open its folder.
 3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-4. Start the server:
+4. Set the required environment variables before starting the server. Use `.env.example` as a reference, then set `USER`, `PASSWORD`, and `SESSION_SECRET` in your shell or environment manager. The application does not load `.env` files automatically.
+5. Start the server:
 
    ```bash
    npm start
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000).
+6. Open [http://localhost:3000](http://localhost:3000).
 
-The server uses Render's `PORT` environment variable when present and defaults to port `3000` locally.
+The server uses Render's `PORT` environment variable when present and defaults to port `3000` locally. Startup fails if `USER`, `PASSWORD`, or `SESSION_SECRET` is missing.
 
 ## Project structure
 
@@ -45,7 +44,8 @@ The server uses Render's `PORT` environment variable when present and defaults t
 school-website/
 ├── admin/                 # Admin pages and assets
 ├── public/
-│   ├── index.html         # Public homepage
+│   ├── dev_text.html      # Page served at /
+│   ├── index.html         # Main school homepage file
 │   ├── about.html
 │   ├── academics.html
 │   ├── achievements.html
@@ -53,18 +53,20 @@ school-website/
 │   ├── teachers.html
 │   ├── gallery.html
 │   ├── contact.html
-│   ├── css/               # Stylesheets
-│   ├── js/                # Browser scripts
-│   └── images/            # Images and logo
-├── server.js              # Express routes and static file server
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── server.js
+├── .env.example           # Safe environment-variable template
+├── .gitignore
 ├── package.json
 └── package-lock.json
 ```
 
 ## Routes
 
-- `/` serves the public homepage (`public/index.html`).
-- `/home` serves the homepage directly.
+- `/` serves `public/dev_text.html` by design.
+- `/home` redirects to `/`.
 - `/about.html`, `/academics.html`, `/facilities.html`, `/achievements.html`, `/teachers.html`, `/gallery.html` and `/contact.html` serve the corresponding public pages.
 - `/admin` opens the admin login page.
 - `/logout` ends the admin session.
@@ -72,18 +74,21 @@ school-website/
 
 ## Deploy on Render
 
-Create a **Web Service** connected to this GitHub repository.
+In the Render Dashboard, open the **GHSS-Chemnad** web service and add these environment variables under **Environment**:
 
-- **Runtime:** Node
-- **Build command:** `npm install`
-- **Start command:** `npm start`
-- **Branch:** `main`
+- `USER` — your custom admin username
+- `PASSWORD` — your strong, unique admin password
+- `SESSION_SECRET` — a long, random secret used to sign sessions
 
-Render provides the `PORT` environment variable automatically. After pushing changes to the connected branch, wait for the deployment to finish, then test the homepage and the individual page routes.
+Do not use the example placeholder values. Save the environment changes and deploy the latest commit. Render provides `PORT` automatically.
 
 ## Security notes
 
-Before using the admin area publicly, configure credentials and the session secret through Render environment variables and read them in `server.js`. Do not commit real passwords, API keys, or production session secrets to Git. Use HTTPS in production and review session-cookie settings for the deployment environment.
+- Never commit your real `.env` file or secrets to GitHub. The `.gitignore` excludes `.env` files while allowing `.env.example`.
+- Do not put admin credentials in HTML or browser JavaScript; browser-delivered code can be inspected by visitors. The login comparison happens on the server.
+- If any real password was previously committed or exposed, change it now; deleting it from the current file does not erase it from Git history.
+- Use a unique password and a long random `SESSION_SECRET`. The app refuses to start if required secrets are missing.
+- Production session cookies use `httpOnly`, `sameSite: "lax"`, and `secure` when `NODE_ENV=production`.
 
 ## Development
 
