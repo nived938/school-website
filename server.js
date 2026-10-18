@@ -5,35 +5,39 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const ADMIN_USERNAME = "admin";
-const ADMIN_PASSWORD = "ghsschemnad";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "ghsschemnad";
+const SESSION_SECRET = process.env.SESSION_SECRET || "school_secret_key";
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
-        secret: "school_secret_key",
+        secret: SESSION_SECRET,
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production"
+        }
     })
 );
 
-// IMPORTANT
-// Disable automatic index.html
+// Serve public assets, but do not let Express choose an index file automatically.
 app.use(express.static(path.join(__dirname, "public"), {
     index: false
 }));
 
-// Home page
+// Public homepage. Previously this route served dev_text.html, which is only a placeholder.
 app.get("/", (req, res) => {
-    console.log("ROOT ROUTE");
-    res.sendFile(path.join(__dirname, "public", "dev_text.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Website
+// Keep the existing /home URL working.
 app.get("/home", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
+    res.redirect("/");
 });
 
 // Login page
@@ -43,37 +47,29 @@ app.get("/admin", (req, res) => {
 
 // Login API
 app.post("/api/login", (req, res) => {
-
     const { username, password } = req.body;
 
-    if (
-        username === ADMIN_USERNAME &&
-        password === ADMIN_PASSWORD
-    ) {
-
+    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         req.session.loggedIn = true;
-
         return res.json({
             success: true,
             redirect: "/admin/index.html"
         });
-
     }
 
-    res.json({
-        success: false
+    return res.status(401).json({
+        success: false,
+        message: "Invalid username or password"
     });
-
 });
 
-// Protect admin
+// Protect admin pages
 function requireLogin(req, res, next) {
-
-    if (req.session.loggedIn)
+    if (req.session.loggedIn) {
         return next();
+    }
 
-    res.redirect("/admin");
-
+    return res.redirect("/admin");
 }
 
 app.get("/admin/index.html", requireLogin, (req, res) => {
@@ -83,23 +79,16 @@ app.get("/admin/index.html", requireLogin, (req, res) => {
 app.use("/admin", requireLogin, express.static(path.join(__dirname, "admin")));
 
 app.get("/logout", (req, res) => {
-
     req.session.destroy(() => {
         res.redirect("/");
     });
-
 });
 
-// 404 Page
+// 404 page
 app.use((req, res) => {
-    res.status(404).sendFile(
-        path.join(__dirname, "public", "404.html")
-    );
+    res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
 });
 
 app.listen(PORT, () => {
-
-    console.log(`Running on http://localhost:${PORT}`);
-
+    console.log(`Server listening on port ${PORT}`);
 });
-
