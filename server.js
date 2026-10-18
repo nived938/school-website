@@ -1,18 +1,19 @@
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const crypto = require("crypto");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Configure these in Render's Environment settings. Never hardcode production secrets.
+// Set USER, PASSWORD, and SESSION_SECRET in Render before enabling admin login.
+// Keep the public website available even if admin credentials have not been configured.
 const ADMIN_USERNAME = process.env.USER;
 const ADMIN_PASSWORD = process.env.PASSWORD;
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 
-if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !SESSION_SECRET) {
-    console.error("Missing required environment variables: USER, PASSWORD, and SESSION_SECRET must all be set.");
-    process.exit(1);
+if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !process.env.SESSION_SECRET) {
+    console.warn("Admin login is not fully configured. Set USER, PASSWORD, and SESSION_SECRET in the Render environment.");
 }
 
 app.use(express.json());
@@ -53,7 +54,14 @@ app.get("/admin", (req, res) => {
 
 // Login API
 app.post("/api/login", (req, res) => {
-    const { username, password } = req.body;
+    if (!ADMIN_USERNAME || !ADMIN_PASSWORD || !process.env.SESSION_SECRET) {
+        return res.status(503).json({
+            success: false,
+            message: "Admin login is not configured. Please configure the required environment variables."
+        });
+    }
+
+    const { username, password } = req.body || {};
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
         req.session.loggedIn = true;
